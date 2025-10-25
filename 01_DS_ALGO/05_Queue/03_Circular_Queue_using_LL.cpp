@@ -6,9 +6,9 @@ class Node
 public:
     int data; 
     Node *next;
-};
+}; 
 
-class CircularQueue
+class CircularLinkedList 
 {
 private:
     Node *front = nullptr; 
@@ -17,75 +17,78 @@ public:
     void enqueue(int value)
     {
         Node *tmp = new Node{value,nullptr}; 
+        //If queue is empty
         if(!front)
         {
             front = rear = tmp; 
+            //create circular link 
             rear->next = front;
         }
-        else 
+        else
         {
-            rear->next = tmp; 
-            rear = tmp; 
+            rear->next = tmp; //link new node to the rear
+            rear = tmp;//update rear pointer
             rear->next = front;
-        }
-    }
-    void dequeue()
-    {
-        if(!front)
-        {
-            cout<<"Queue is empty "<<endl;
-            return;
-        }
-        //Only one node
-        if(front == rear)
-        {
-            delete front; 
-            front = rear = nullptr;
-        }
-        else 
-        {
-            Node *tmp = front; 
-            front = front->next;
-            rear->next = front; 
-            delete tmp;
         }
     }
 
-    void Display()
+    int dequeue()
     {
+        int x = 0xFF; 
         if(!front)
         {
-            cout<<"Queue is empty"<<endl;
-            return ;
+            cout<<"Empty queue: "<<endl;
+            return x;
         }
-        Node *p = front; 
-        do 
+        else 
         {
-            cout<<p->data; 
-            if(p->next != front)
+            Node *tmp  = front; 
+            //delink the front node 
+            front = front->next;
+            rear->next = front; //link rear end to the new front 
+            x = tmp->data; 
+            delete tmp;
+            return x;
+        }
+    }
+
+    void display()
+    {
+        Node *p = front; 
+        do
+        {
+            if(p)
+                cout<<p->data;
+            if(p&&p->next != front)
                 cout<<"->"; 
             p = p->next;
-        }while(p!= front);
+        }while(p!=front);
         cout<<endl;
     }
-
-    ~CircularQueue()
+    ~CircularLinkedList()
     {
+        if(!front)
+            return; 
+        //break circular link first ,else front will never be null
+        rear->next = nullptr;
+        Node *tmp;
         while(front)
-            dequeue();
+        {  
+            tmp = front;
+            front = front->next;
+            delete tmp; 
+        }
     }
 };
 
-int main() {
-    CircularQueue Q;
-    Q.enqueue(10);
-    Q.enqueue(20);
-    Q.enqueue(30);
-    Q.enqueue(40);
-
-    Q.Display();  // 10 -> 20 -> 30 -> 40
-    Q.dequeue();  // removes 10
-    Q.Display();  // 20 -> 30 -> 40
-
+int main()
+{
+    int A[6] = {1,2,3,4,5,6}; 
+    CircularLinkedList cll; 
+    for(int i=0;i<6;i++)
+        cll.enqueue(A[i]); 
+    cll.display();
+    cll.dequeue(); 
+    cll.display();
     return 0;
 }
