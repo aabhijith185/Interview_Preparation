@@ -42,7 +42,7 @@ public:
             cout<<"Queue underflow"<<endl;
         else 
         {
-            x = front; 
+            x = Q[front]; 
             front = (front+1)%size;
         }
         return x;

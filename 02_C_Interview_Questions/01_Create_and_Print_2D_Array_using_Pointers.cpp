@@ -26,7 +26,7 @@ int** create_2d_array(int rows,int cols)
 
         int k=0;
         //Initialize and fill the array element 
-        for(int j=0lj<cols;j++)
+        for(int j=0;j<cols;j++)
         {
             arr[i][j] = k++;
         }
@@ -61,7 +61,7 @@ void free_2d_array(int **arr,int rows)
     //Free memory allocated for each row 
     for(int i=0;i<rows;i++)
     {
-        if(arr[i]!= NULL
+        if(arr[i]!= NULL)
             free(arr[i]);
     }
 
