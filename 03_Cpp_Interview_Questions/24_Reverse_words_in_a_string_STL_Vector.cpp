@@ -25,10 +25,13 @@ string reverseWords(const std::string &input)
     string res; 
     for(auto i : words)
     {
-        res+=words; 
+        res+=i; 
         int j = 0; 
         if(j<words.size())
+        {
             res += " ";
+            j++;
+        }
     }
     return res;
 }
