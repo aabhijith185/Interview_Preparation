@@ -24,7 +24,7 @@ void first_two_non_repeating_characters(int A[],int n)
 
 int main(void)
 {
-    int A[7] = {1,2,3,4,5,2,1}; 
+    int A[6] = {1,2,3,4,2,1}; 
     first_two_non_repeating_characters(A,6); 
 
     return 0;
