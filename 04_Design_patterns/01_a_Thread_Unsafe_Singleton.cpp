@@ -9,7 +9,7 @@ private :
 public : 
     static Singleton* getInstance()
     {
-        if(instance == nullptr) //<- Not thread safe
+        if(instance == nullptr) //<- Both threads check this condition at the same time
         {
             instance = new Singleton(); //<- Race condition here 
         }

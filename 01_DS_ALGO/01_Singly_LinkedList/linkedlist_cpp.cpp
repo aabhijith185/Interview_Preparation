@@ -31,6 +31,8 @@ public:
     void reverse();
     bool is_sorted(); 
     void Merge(Node *p,Node *q);
+    void recursive_reverse();
+    Node* recursive_reverse_helper(Node *p,Node *q);
 };
 
 //Parameterized constructor 
@@ -183,6 +185,27 @@ void LinkedList::reverse()
     }
     first = q;
 }
+
+Node* LinkedList::recursive_reverse_helper(Node *p,Node *q)
+{
+    //Base case : If p reaches nullptr ,we reached end of linkedlist ,q will be the new head 
+    if(p==nullptr)
+        return q;
+    //Store the next node before overwriting the link
+    Node *r = p->next; 
+
+    //Reverse the link 
+    p->next = q; 
+
+    /* Recursively call the function with next node r as current node(p) and current node p
+    as previous node q */
+    return recursive_reverse_helper(r,p);
+
+}
+void LinkedList::recursive_reverse()
+{
+    first = recursive_reverse_helper(first,nullptr);
+}
 int LinkedList::findMidNode()
 {
     Node *p = first ; 
@@ -263,11 +286,12 @@ int main()
     int A[5] = {1,3,5,7,9};
     int B[5] = {0,2,4,6,8};
     LinkedList ll(A,5); 
+    // ll.Display(ll.first);
+    // ll.create(B,5);
+    // ll.Display(ll.second);
+    // ll.Merge(ll.first,ll.second);
+    ll.recursive_reverse();
     ll.Display(ll.first);
-    ll.create(B,5);
-    ll.Display(ll.second);
-    ll.Merge(ll.first,ll.second);
-    ll.Display(ll.res);
     
     return 0;
 }
